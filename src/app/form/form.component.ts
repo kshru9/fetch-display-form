@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { VALUES } from '../all-values';
-import { Value } from '../value';
+import { SOURCES, DATABASES } from '../all-values';
 
 @Component({
   selector: 'app-form',
@@ -9,7 +8,8 @@ import { Value } from '../value';
 })
 export class FormComponent {
   title = "Your Form";
-  values = VALUES;
+  sources = SOURCES;
+  databases= DATABASES;
   // values = {
   //   "sources" : [
   //     {
@@ -53,7 +53,7 @@ export class FormComponent {
   onSelectDatabase(value: string): void {
     this.selectedDatabase = value;
   }
-  
+
   selectedColumns? : string;
   onSelectColumns(value: string): void {
     this.selectedColumns = value;

@@ -7,20 +7,50 @@
     <input type="radio" value="{{item.source}}" name="source" [ngModel]="item.source" (ngModelChange)='onSelectSource(item.source)'>
 </div>  -->
 
-<div *ngFor='let item of values;let i = index'>                    
-    <input type="radio" value="{{item.source}}" name="source" [ngModel]="item.source" (ngModelChange)='onSelectSource(item.source)'> {{item.source}}
+<div *ngFor='let source of sources; let i = index'>
+    <input type="radio" value="{{source.source}}" name="source" [checked]='source.source' (click)='onSelectSource(source.source)'> {{source.source}}
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div *ngFor='let source of sources; let i = index'>
+    <div *ngIf='source.source===selectedSource'>
+        {{selectedSource}}
+        <div *ngFor='let db of source.databases; let i = index'>
+            <input type="radio" value="{{db}}" name="database" [checked]='db' (click)='onSelectDatabase(db)'> {{db}}
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div *ngFor='let db of databases; let i = index'>
+    <div *ngIf='db.database === selectedDatabase'>
+        <div *ngFor='let column of db.columns; let i = index'>
+            <input type="radio" value="{{column}}" name="database" [checked]='column' (click)='onSelectColumns(column)'> {{column}}
+        </div>
+    </div>
+</div>
+
+<!-- <div *ngFor='let item of values;let i = index'>                    
+    <input type="radio" value="{{item.source}}" name="source" [ngSwitch]="item.source" (ngModelChange)='onSelectSource(item.source)'> {{item.source}}
     <br>
-    <input type="radio" value="{{item.database}}" name="source" [ngModel]="item.database" (ngModelChange)='onSelectDatabase(item.database)'> {{item.database}}
+    <input type="radio" value="{{item.database}}" name="source" [ngSwitch]="item.database" (ngModelChange)='onSelectDatabase(item.database)'> {{item.database}}
     <div *ngFor='let column of item.columns;let i = index'>
-        <input type="radio" value="{{column}}" name="column" [ngModel]="column" (ngModelChange)='onSelectColumns(column)'> {{column}}
+        <input type="radio" value="{{column}}" name="column" [ngSwitch]="column" (ngModelChange)='onSelectColumns(column)'> {{column}}
     </div>
     <div>
         <p>new value</p>
     </div>
-</div>
-
-
-
+</div> -->
 
 <!-- <ul>
     <li *ngFor="let value of values" (click)="onSelect(value)"> {{value.source}} </li>

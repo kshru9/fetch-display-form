@@ -1,5 +1,10 @@
-export interface Value {
+export interface Sources {
     source : string,
-    database: string,
-    columns: string[]
+    databases : string[],
+
+}
+
+export interface Databases {
+    database : string,
+    columns : string[]
 }
