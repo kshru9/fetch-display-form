@@ -1,0 +1,44 @@
+<h2>{{title}}</h2>
+<!-- 
+<div *ngFor='let item of values;let i = index'>                    
+    <input type="radio" [checked]="item" (change)='onSelect(item)' > 
+     <input type="text" value='{{item.source}}'/>  
+     <button type="button">save</button>
+    <input type="radio" value="{{item.source}}" name="source" [ngModel]="item.source" (ngModelChange)='onSelectSource(item.source)'>
+</div>  -->
+
+<div *ngFor='let item of values;let i = index'>                    
+    <input type="radio" value="{{item.source}}" name="source" [ngModel]="item.source" (ngModelChange)='onSelectSource(item.source)'> {{item.source}}
+    <br>
+    <input type="radio" value="{{item.database}}" name="source" [ngModel]="item.database" (ngModelChange)='onSelectDatabase(item.database)'> {{item.database}}
+    <div *ngFor='let column of item.columns;let i = index'>
+        <input type="radio" value="{{column}}" name="column" [ngModel]="column" (ngModelChange)='onSelectColumns(column)'> {{column}}
+    </div>
+    <div>
+        <p>new value</p>
+    </div>
+</div>
+
+
+
+
+<!-- <ul>
+    <li *ngFor="let value of values" (click)="onSelect(value)"> {{value.source}} </li>
+</ul> -->
+
+
+<div *ngIf="onSelectSource">
+
+    <!-- <h2>{{sele.source| uppercase}} Details</h2>
+    <div><span>database: </span>{{selectedValue.database}}</div>
+     -->
+
+    <h2>{{selectedSource}}</h2>
+    <div *ngIf="onSelectDatabase">
+        <h2>{{selectedDatabase}}</h2>
+    </div>
+    <div *ngIf="onSelectColumns">
+        <h2>{{selectedColumns}}</h2>
+    </div>
+  
+  </div>
