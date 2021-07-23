@@ -7,38 +7,49 @@
     <input type="radio" value="{{item.source}}" name="source" [ngModel]="item.source" (ngModelChange)='onSelectSource(item.source)'>
 </div>  -->
 
-<div *ngFor='let source of sources; let i = index'>
-    <input type="radio" value="{{source.source}}" name="source" [checked]='source.source' (click)='onSelectSource(source.source)'> {{source.source}}
-</div>
+<form (ngSubmit)='onSubmit()'>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<div *ngFor='let source of sources; let i = index'>
-    <div *ngIf='source.source===selectedSource'>
-        {{selectedSource}}
-        <div *ngFor='let db of source.databases; let i = index'>
-            <input type="radio" value="{{db}}" name="database" [checked]='db' (click)='onSelectDatabase(db)'> {{db}}
+    <div *ngFor='let source of sources; let i = index'>
+        <input type="radio" value="{{source.source}}" name="source" [checked]='source.source' (click)='onSelectSource(source.source)'> {{source.source}}
+    </div>
+    
+    <br>
+    <br>
+    <br>
+    
+    <div *ngFor='let source of sources; let i = index'>
+        <div *ngIf='source.source===selectedSource'>
+            {{selectedSource}}
+            <div *ngFor='let db of source.databases; let i = index'>
+                <input type="radio" value="{{db}}" name="database" [checked]='db' (click)='onSelectDatabase(db)'> {{db}}
+            </div>
         </div>
     </div>
-</div>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<div *ngFor='let db of databases; let i = index'>
-    <div *ngIf='db.database === selectedDatabase'>
-        <div *ngFor='let column of db.columns; let i = index'>
-            <input type="radio" value="{{column}}" name="database" [checked]='column' (click)='onSelectColumns(column)'> {{column}}
+    
+    <br>
+    <br>
+    <br>
+    
+    <div *ngFor='let db of databases; let i = index'>
+        <div *ngIf='db.database === selectedDatabase'>
+            <div *ngFor='let column of db.columns; let i = index'>
+                <input type="radio" value="{{column}}" name="database" [checked]='column' (click)='onSelectColumns(column)'> {{column}}
+            </div>
         </div>
     </div>
-</div>
+    
+    <div>
+        <p>Filters:</p>
+        <input type="text" name="filters" [(ngModel)]="selectedFilters" (ngModelChange)='onSelectFilters(selectedFilters)'> 
+    </div>
+
+    <div>
+        <p>Number of entries to fetch</p>
+        <input type="text" name="limit" [(ngModel)]="selectedLimit">
+    </div>
+
+    <button type="submit">submit</button>
+</form>
 
 <!-- <div *ngFor='let item of values;let i = index'>                    
     <input type="radio" value="{{item.source}}" name="source" [ngSwitch]="item.source" (ngModelChange)='onSelectSource(item.source)'> {{item.source}}
@@ -58,10 +69,6 @@
 
 
 <div *ngIf="onSelectSource">
-
-    <!-- <h2>{{sele.source| uppercase}} Details</h2>
-    <div><span>database: </span>{{selectedValue.database}}</div>
-     -->
 
     <h2>{{selectedSource}}</h2>
     <div *ngIf="onSelectDatabase">

@@ -58,4 +58,31 @@ export class FormComponent {
   onSelectColumns(value: string): void {
     this.selectedColumns = value;
   }
+
+  selectedFilters? : string[];
+  onSelectFilters(value? : string[]): void {
+    // this.selectedFilters = value.split(",");
+    this.selectedFilters = value;
+    console.log(this.selectedFilters);
+  }
+
+  selectedLimit? : string;
+  onSelectLimit(value: string): void {
+    this.selectedLimit = value;
+    console.log(this.selectedLimit);
+  }
+
+  ans: any
+  onSubmit(): void{
+    this.ans = {
+      "source": this.selectedSource,
+      "db": this.selectedDatabase,
+      "columns": this.selectedColumns,
+      "filters": this.selectedFilters,
+      "limit": this.selectedLimit
+    };
+
+    console.log(this.ans);
+  }
+  
 }
