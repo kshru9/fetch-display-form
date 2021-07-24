@@ -32,8 +32,9 @@
     
     <div *ngFor='let db of databases; let i = index'>
         <div *ngIf='db.database === selectedDatabase'>
-            <div *ngFor='let column of db.columns; let i = index'>
-                <input type="radio" value="{{column}}" name="column" [checked]='column' (click)='onSelectColumns(column)'> {{column}}
+            <div *ngFor='let column of db.columns; let ind=index'>
+                <!-- <input type="checkbox" value="{{column}}" name="column"  (click)='onSelectColumns(column)'> {{column}} -->
+                <input type="checkbox" value="{{column}}" name="column" [checked]="checkBoxValue[ind]" (change)='checkBoxValue[ind] = !checkBoxValue[ind]' (click)='onSelectColumns(column,ind)' > {{column}}
             </div>
         </div>
     </div>

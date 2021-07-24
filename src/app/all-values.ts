@@ -13,3 +13,5 @@ export const DATABASES: Databases[] = [
   {database: 'db2', columns : ['col1', 'col2', 'col3']},
   {database: 'db3', columns : ['col1', 'col2', 'col3']},
 ]
+
+export const MAX_COLUMNS: number = 3;
