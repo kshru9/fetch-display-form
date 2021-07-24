@@ -86,7 +86,8 @@ export class FormComponent {
   //   console.log(this.ans);
   // }
   
-  filters? : string[];
+  filters : string[] = [];
+  response: string = "";
   submitForm(): void {
     // var formData: any = new FormData();
     // formData.append("source", this.selectedSource);
@@ -103,7 +104,7 @@ export class FormComponent {
     console.log(this.selectedFilters);
     console.log(this.selectedLimit);
     
-    this.filters = this.selectedFilters?.split(",");
+    this.filters = this.selectedFilters.split(",");
 
     console.log(this.filters);
 
@@ -120,10 +121,14 @@ export class FormComponent {
     
     let headers = new HttpHeaders();
     headers = headers.set('Access-Control-Allow-Origin', 'http://localhost:4200')
-    .set('Access-Control-Allow-Methods', "GET, POST, DELETE, PUT");
+    .set('Access-Control-Allow-Methods', "GET, POST, DELETE, PUT")
+    .set('Content-Type', 'application/json');
     
-    this.http.post('http://localhost:8081/api/save', json, {headers: headers}).subscribe(
-      (response) => console.log(response),
+    this.http.post('http://localhost:8081/api/save', json, {headers: headers, responseType: 'text'}).subscribe(
+      (response) => {
+        console.log(response);
+        this.response = response;
+      },
       (error) => console.log(error),
       )
       

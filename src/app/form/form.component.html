@@ -19,7 +19,7 @@
 
         <div class="row">
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 
                 <h4>List of all sources available</h4>
                 
@@ -29,7 +29,7 @@
                 
             </div>
             
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <h4>List of all databases available for selected source</h4>
                 
                 <div *ngFor='let source of sources; let i = index'>
@@ -42,7 +42,7 @@
                 
             </div>
             
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <h4>List of all columns available for selected database</h4>
 
                 <div *ngFor='let db of databases; let i = index'>
@@ -56,15 +56,18 @@
                 
             </div>
 
-        </div>
+            <div class="col-md-3">
+                <h4>Your Response</h4>
+                <div>{{response}}</div>
+            </div>
 
-        <br>
+        </div>
 
         <div class="row">
 
             <div class="col-md-6">
 
-                <div>
+                <div class="input-group">
                     <p>Filters:</p>
                     <input type="text" name="filters" [(ngModel)]="selectedFilters" (ngModelChange)='onSelectFilters(selectedFilters)'> 
                 </div>
@@ -73,17 +76,15 @@
             
             <div class="col-md-6">
 
-                <div>
+                <div class="input-group">
                     <p>Number of entries to fetch</p>
-                    <input type="text" name="limit" [(ngModel)]="selectedLimit" (ngModelChange)='onSelectLimit(selectedLimit)'>
+                    <textarea name="limit" [(ngModel)]="selectedLimit" (ngModelChange)='onSelectLimit(selectedLimit)' ></textarea>
+                    <!-- <input type="text" name="limit" [(ngModel)]="selectedLimit" (ngModelChange)='onSelectLimit(selectedLimit)'> -->
                 </div>
             
             </div>
             
         </div>
-
-        <br>
-
 
         <div class="row">
             <div class="col-md-4"></div>
@@ -92,8 +93,6 @@
             </div>
             <div class="col-md-4"></div>
         </div>
-
-        <br>
 
     </form>
 </div>
