@@ -130,10 +130,7 @@ export class FormComponent {
         this.response = response;
       },
       (error) => console.log(error),
-      )
-      
-    alert("Your response is recorded. Wait for 5 mins to get response.");
-    
+      )    
   }
     
 }
