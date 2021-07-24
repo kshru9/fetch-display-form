@@ -15,14 +15,33 @@ export class FormComponent {
 
   constructor ( private http: HttpClient){}
 
+  reset(){
+    this.selectedColumns = [];
+    this.selectedDatabase = "";
+    this.selectedFilters = "";
+    this.selectedLimit = "";
+    this.selectedSource = "";
+    this.checkBoxValue.fill(false);
+  }
+  
+  resetDb(){
+    this.selectedColumns = [];
+    this.selectedDatabase = "";
+    this.selectedFilters = "";
+    this.selectedLimit = "";
+    this.checkBoxValue.fill(false);
+  }
+
   selectedSource : string = "";
   onSelectSource(value: string): void {
+    this.reset();
     this.selectedSource = value;
     console.log(this.selectedSource);
   }
 
   selectedDatabase : string = "";
   onSelectDatabase(value: string): void {
+    this.resetDb();
     this.selectedDatabase = value;
     console.log(this.selectedDatabase);
   }

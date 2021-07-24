@@ -1,56 +1,102 @@
-<h2>{{title}}</h2>
 <!-- 
-<div *ngFor='let item of values;let i = index'>                    
-    <input type="radio" [checked]="item" (change)='onSelect(item)' > 
-     <input type="text" value='{{item.source}}'/>  
-     <button type="button">save</button>
-    <input type="radio" value="{{item.source}}" name="source" [ngModel]="item.source" (ngModelChange)='onSelectSource(item.source)'>
-</div>  -->
-
-<form (ngSubmit)='submitForm()'>
-
-    <div *ngFor='let source of sources; let i = index'>
-        <input type="radio" value="{{source.source}}" name="source" [checked]='source.source' (click)='onSelectSource(source.source)'> {{source.source}}
-    </div>
+    <div *ngFor='let item of values;let i = index'>                    
+        <input type="radio" [checked]="item" (change)='onSelect(item)' > 
+        <input type="text" value='{{item.source}}'/>  
+        <button type="button">save</button>
+        <input type="radio" value="{{item.source}}" name="source" [ngModel]="item.source" (ngModelChange)='onSelectSource(item.source)'>
+    </div>  -->
     
-    <br>
-    <br>
-    <br>
-    
-    <div *ngFor='let source of sources; let i = index'>
-        <div *ngIf='source.source===selectedSource'>
-            {{selectedSource}}
-            <div *ngFor='let db of source.databases; let i = index'>
-                <input type="radio" value="{{db}}" name="db" [checked]='db' (click)='onSelectDatabase(db)'> {{db}}
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h2>{{title}}</h2>
         </div>
+        <div class="col-md-4"></div>
     </div>
-    
-    <br>
-    <br>
-    <br>
-    
-    <div *ngFor='let db of databases; let i = index'>
-        <div *ngIf='db.database === selectedDatabase'>
-            <div *ngFor='let column of db.columns; let ind=index'>
-                <!-- <input type="checkbox" value="{{column}}" name="column"  (click)='onSelectColumns(column)'> {{column}} -->
-                <input type="checkbox" value="{{column}}" name="column" [checked]="checkBoxValue[ind]" (change)='checkBoxValue[ind] = !checkBoxValue[ind]' (click)='onSelectColumns(column,ind)' > {{column}}
+
+    <form (ngSubmit)='submitForm()'>
+
+        <div class="row">
+
+            <div class="col-md-4">
+                
+                <h4>List of all sources available</h4>
+                
+                <div *ngFor='let source of sources; let i = index'>
+                    <input type="radio" value="{{source.source}}" name="source" [checked]='source.source' (click)='onSelectSource(source.source)'> {{source.source}}
+                </div>
+                
             </div>
+            
+            <div class="col-md-4">
+                <h4>List of all databases available for selected source</h4>
+                
+                <div *ngFor='let source of sources; let i = index'>
+                    <div *ngIf='source.source===selectedSource'>
+                        <div *ngFor='let db of source.databases; let i = index'>
+                            <input type="radio" value="{{db}}" name="db" [checked]='db' (click)='onSelectDatabase(db)'> {{db}}
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="col-md-4">
+                <h4>List of all columns available for selected database</h4>
+
+                <div *ngFor='let db of databases; let i = index'>
+                    <div *ngIf='db.database === selectedDatabase'>
+                        <div *ngFor='let column of db.columns; let ind=index'>
+                            <!-- <input type="checkbox" value="{{column}}" name="column"  (click)='onSelectColumns(column)'> {{column}} -->
+                            <input type="checkbox" value="{{column}}" name="column" [checked]="checkBoxValue[ind]" (change)='checkBoxValue[ind] = !checkBoxValue[ind]' (click)='onSelectColumns(column,ind)' > {{column}}
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
         </div>
-    </div>
-    
-    <div>
-        <p>Filters:</p>
-        <input type="text" name="filters" [(ngModel)]="selectedFilters" (ngModelChange)='onSelectFilters(selectedFilters)'> 
-    </div>
 
-    <div>
-        <p>Number of entries to fetch</p>
-        <input type="text" name="limit" [(ngModel)]="selectedLimit" (ngModelChange)='onSelectLimit(selectedLimit)'>
-    </div>
+        <br>
 
-    <button type="submit">submit</button>
-</form>
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <div>
+                    <p>Filters:</p>
+                    <input type="text" name="filters" [(ngModel)]="selectedFilters" (ngModelChange)='onSelectFilters(selectedFilters)'> 
+                </div>
+
+            </div>
+            
+            <div class="col-md-6">
+
+                <div>
+                    <p>Number of entries to fetch</p>
+                    <input type="text" name="limit" [(ngModel)]="selectedLimit" (ngModelChange)='onSelectLimit(selectedLimit)'>
+                </div>
+            
+            </div>
+            
+        </div>
+
+        <br>
+
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <button type="submit">submit</button>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <br>
+
+    </form>
+</div>
 
 <!-- <div *ngFor='let item of values;let i = index'>                    
     <input type="radio" value="{{item.source}}" name="source" [ngSwitch]="item.source" (ngModelChange)='onSelectSource(item.source)'> {{item.source}}
@@ -69,14 +115,43 @@
 </ul> -->
 
 
-<div *ngIf="onSelectSource">
+<div class="container" *ngIf="onSelectSource">
 
-    <h2>{{selectedSource}}</h2>
-    <div *ngIf="onSelectDatabase">
-        <h2>{{selectedDatabase}}</h2>
+    <div class="row">
+
+        <div class="col-md-4">
+            <h2>Selected Source: {{selectedSource}}</h2>
+        </div>
+
+        <div class="col-md-4">
+            <div *ngIf="onSelectDatabase">
+                <h2>Selected Database: {{selectedDatabase}}</h2>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div *ngIf="onSelectColumns">
+                <h2>Selected Columns:</h2>
+                <div *ngFor="let column of selectedColumns">
+                    <h2>{{column}}</h2>
+                </div>
+            </div>
+        </div>
+        
     </div>
-    <div *ngIf="onSelectColumns">
-        <h2>{{selectedColumns}}</h2>
+
+    <!-- <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4"></div>
     </div>
-  
-  </div>
+
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4"></div>
+    </div> -->
+        
+</div>
