@@ -8,12 +8,19 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./form.component.css']
 })
 export class FormComponent {
+  
+  constructor ( private http: HttpClient){
+    this.getDbList();
+  }
 
-  title = "Your Form";
-  sources = SOURCES;
-  tables= TABLES;
+  sources: string[] = [];
+  tables: string[] = [];
+  columns: string[] = [];
 
-  constructor ( private http: HttpClient){}
+  saveUrl: string = "http://localhost:8081/api/save";
+  getDbsUrl: string = "http://localhost:8081/api/getdbs";
+  getTablesUrl: string = "http://localhost:8081/api/gettables/";
+  getColumnsUrl: string = "http://localhost:8081/api/getcolumns";
 
   reset(){
     this.selectedColumns = [];
@@ -36,6 +43,7 @@ export class FormComponent {
   onSelectSource(value: string): void {
     this.reset();
     this.selectedSource = value;
+    this.getTablesList();
     console.log(this.selectedSource);
   }
 
@@ -43,6 +51,7 @@ export class FormComponent {
   onSelectTable(value: string): void {
     this.resetDb();
     this.selectedTable = value;
+    this.getColumnsList();
     console.log(this.selectedTable);
   }
 
@@ -73,40 +82,59 @@ export class FormComponent {
     console.log(this.selectedLimit);
   }
 
-  // ans: any
-  // onSubmit(): void{
-  //   this.ans = {
-  //     "source": this.selectedSource,
-  //     "db": this.selectedDatabase,
-  //     "columns": this.selectedColumns,
-  //     "filters": this.selectedFilters,
-  //     "limit": this.selectedLimit
-  //   };
-    
-  //   console.log(this.ans);
-  // }
+  getDbList(): void {
+    this.http.get<string[]>(this.getDbsUrl).subscribe(
+        (data) => {
+            console.log(data, "data");
+            this.sources = data
+        },
+        (error) => console.log(error),
+    );
+  }
+
+  getTablesList(): void {
+    this.http.get<string[]>(this.getTablesUrl+this.selectedSource).subscribe(
+      (data) => {
+        console.log(data);
+        this.tables = data
+      },
+      (error) => console.log(error),
+    )
+  }
+
+  getColumnsList(): void {
+    let json = {
+      "db": this.selectedSource,
+      "table": this.selectedTable
+    };
+
+    let headers = new HttpHeaders();
+    headers = headers.set('Access-Control-Allow-Origin', 'http://localhost:4200')
+    .set('Access-Control-Allow-Methods', "GET, POST, DELETE, PUT")
+    .set('Content-Type', 'application/json');
+
+    this.http.post<string[]>(this.getColumnsUrl, json, {headers: headers}).subscribe(
+      (response) => {
+        console.log(response);
+        this.columns = response;
+      },
+      (error) => console.log(error),
+    )
+  }
   
   filters : string[] = [];
   response: string = "";
   submitForm(): void {
-    // var formData: any = new FormData();
-    // formData.append("source", this.selectedSource);
-    // formData.append("db", this.selectedDatabase);
-    // formData.append("columns", this.selectedColumns);
-    // formData.append("filters", this.selectedFilters);
-    // formData.append("limit", this.selectedLimit);
     
-    // console.log(formData.value);
-    
-    console.log(this.selectedSource);
-    console.log(this.selectedTable);
-    console.log(this.selectedColumns);
-    console.log(this.selectedFilters);
-    console.log(this.selectedLimit);
+    // console.log(this.selectedSource);
+    // console.log(this.selectedTable);
+    // console.log(this.selectedColumns);
+    // console.log(this.selectedFilters);
+    // console.log(this.selectedLimit);
     
     this.filters = this.selectedFilters.split(",");
 
-    console.log(this.filters);
+    // console.log(this.filters);
 
     let json = {
       "source" : this.selectedSource,
@@ -124,7 +152,7 @@ export class FormComponent {
     .set('Access-Control-Allow-Methods', "GET, POST, DELETE, PUT")
     .set('Content-Type', 'application/json');
     
-    this.http.post('http://localhost:8081/api/save', json, {headers: headers, responseType: 'text'}).subscribe(
+    this.http.post(this.saveUrl, json, {headers: headers, responseType: 'text'}).subscribe(
       (response) => {
         console.log(response);
         this.response = response;

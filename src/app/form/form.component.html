@@ -22,7 +22,7 @@
                     <ul class="list-group list-group-flush">
                         <!-- <div *ngFor='let source of sources; let i = index'> -->
                           <li class="list-group-item" *ngFor='let source of sources; let i = index'>
-                            <input type="radio" value="{{source.source}}" name="source" [checked]='source.source' (click)='onSelectSource(source.source)'> {{source.source}}
+                            <input type="radio" value="{{source}}" name="source" [checked]='source' (click)='onSelectSource(source)'> {{source}}
                           </li>
                           
                         <!-- </div> -->
@@ -38,17 +38,14 @@
             <div class="col-lg-4 col-md-4">
                 <h5>Select Tables</h5>
 
-                <div class="card" style="width: 15rem;">
-                    <div *ngFor='let source of sources; let i = index'>
-                        <div *ngIf='source.source===selectedSource'>
-                            <ul class="list-group list-group-flush">
-                              <li class="list-group-item" *ngFor='let db of source.tables; let i = index'>
-                                  <input type="radio" value="{{db}}" name="db" [checked]='db' (click)='onSelectTable(db)'> {{db}}
-                              </li>
-                            </ul>
-                        </div>
-                    </div>
-                  </div>
+                <div class="card" style="width: 15rem;" *ngIf='onSelectSource'>
+                    
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" *ngFor='let table of tables; let i = index'>
+                            <input type="radio" value="{{table}}" name="db" [checked]='table' (click)='onSelectTable(table)'> {{table}}
+                        </li>
+                    </ul>
+                </div>
                 
                 <!-- <div *ngFor='let source of sources; let i = index'>
                     <div *ngIf='source.source===selectedSource'>
@@ -60,16 +57,16 @@
                 
             </div>
             
-            <div class="col-lg-4 col-md-4">
+            <div class="col-lg-4 col-md-4" *ngIf="onSelectTable">
                 <h5>Select Columns</h5>
 
-                <div *ngFor='let db of tables; let i = index'>
-                    <div *ngIf='db.table === selectedTable'>
-                        <div *ngFor='let column of db.columns; let ind=index'>
-                            <!-- <input type="checkbox" value="{{column}}" name="column"  (click)='onSelectColumns(column)'> {{column}} -->
+                <div class="card" style="width: 15rem;" *ngIf='onSelectSource'>
+                    
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" *ngFor='let column of columns; let ind = index'>
                             <input type="checkbox" value="{{column}}" name="column" [checked]="checkBoxValue[ind]" (change)='checkBoxValue[ind] = !checkBoxValue[ind]' (click)='onSelectColumns(column,ind)' > {{column}}
-                        </div>
-                    </div>
+                        </li>
+                    </ul>
                 </div>
                 
             </div>
