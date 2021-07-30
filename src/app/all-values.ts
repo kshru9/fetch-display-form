@@ -1,17 +1,17 @@
-import { Databases, Sources } from './value';
+import { Tables, Sources } from './value';
 
 export const SOURCES: Sources[] = [
-  {source: "default", databases: ['medicare_demographic', 'db2', 'db3']},
-  {source: "source2", databases: ['db1', 'db2', 'db3']},
-  {source: "source3", databases: ['db1', 'db2', 'db3']},
-  {source: "source4", databases: ['db1', 'db2', 'db3']},
+  {source: "default", tables: ['medicare_demographic', 'db2', 'db3']},
+  {source: "source2", tables: ['db1', 'db2', 'db3']},
+  {source: "source3", tables: ['db1', 'db2', 'db3']},
+  {source: "source4", tables: ['db1', 'db2', 'db3']},
 ];
 
-export const DATABASES: Databases[] = [
-  {database: "medicare_demographic", columns: ['name', 'id', 'county']},
-  {database: 'db1', columns : ['col1', 'col2', 'col3']},
-  {database: 'db2', columns : ['col1', 'col2', 'col3']},
-  {database: 'db3', columns : ['col1', 'col2', 'col3']},
+export const TABLES: Tables[] = [
+  {table: "medicare_demographic", columns: ['name', 'id', 'county', 'number']},
+  {table: 'db1', columns : ['col1', 'col2', 'col3']},
+  {table: 'db2', columns : ['col1', 'col2', 'col3']},
+  {table: 'db3', columns : ['col1', 'col2', 'col3']},
 ]
 
-export const MAX_COLUMNS: number = 3;
+export const MAX_COLUMNS: number = 4;

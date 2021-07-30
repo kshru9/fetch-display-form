@@ -7,14 +7,6 @@
     </div>  -->
     
 <div class="container">
-    &nbsp;
-    <div class="row">
-        <div class="col-md-5"></div>
-        <div class="col-md-2">
-            <h2>{{title}}</h2>
-        </div>
-        <div class="col-md-5"></div>
-    </div>
 
     &nbsp;
 
@@ -22,11 +14,11 @@
 
         <div class="row">
 
-            <div class="col-lg-3 col-md-3">
+            <div class="col-lg-4 col-md-4">
                 
-                <h5> List of all sources available </h5>
+                <h5> Select Source </h5>
 
-                <div class="card">
+                <div class="card" style="width: 15rem;">
                     <ul class="list-group list-group-flush">
                         <!-- <div *ngFor='let source of sources; let i = index'> -->
                           <li class="list-group-item" *ngFor='let source of sources; let i = index'>
@@ -43,15 +35,15 @@
                 
             </div>
             
-            <div class="col-lg-3 col-md-3">
-                <h5>List of all databases available for selected source</h5>
+            <div class="col-lg-4 col-md-4">
+                <h5>Select Tables</h5>
 
                 <div class="card" style="width: 15rem;">
                     <div *ngFor='let source of sources; let i = index'>
                         <div *ngIf='source.source===selectedSource'>
                             <ul class="list-group list-group-flush">
-                              <li class="list-group-item" *ngFor='let db of source.databases; let i = index'>
-                                  <input type="radio" value="{{db}}" name="db" [checked]='db' (click)='onSelectDatabase(db)'> {{db}}
+                              <li class="list-group-item" *ngFor='let db of source.tables; let i = index'>
+                                  <input type="radio" value="{{db}}" name="db" [checked]='db' (click)='onSelectTable(db)'> {{db}}
                               </li>
                             </ul>
                         </div>
@@ -68,11 +60,11 @@
                 
             </div>
             
-            <div class="col-lg-3 col-md-3">
-                <h5>List of all columns available for selected database</h5>
+            <div class="col-lg-4 col-md-4">
+                <h5>Select Columns</h5>
 
-                <div *ngFor='let db of databases; let i = index'>
-                    <div *ngIf='db.database === selectedDatabase'>
+                <div *ngFor='let db of tables; let i = index'>
+                    <div *ngIf='db.table === selectedTable'>
                         <div *ngFor='let column of db.columns; let ind=index'>
                             <!-- <input type="checkbox" value="{{column}}" name="column"  (click)='onSelectColumns(column)'> {{column}} -->
                             <input type="checkbox" value="{{column}}" name="column" [checked]="checkBoxValue[ind]" (change)='checkBoxValue[ind] = !checkBoxValue[ind]' (click)='onSelectColumns(column,ind)' > {{column}}
@@ -80,15 +72,6 @@
                     </div>
                 </div>
                 
-            </div>
-
-            <div class="col-lg-3 col-md-3">
-                <h5>Your Response</h5>
-                <div>
-                    <p style="color: crimson;">
-                        {{response}}
-                    </p>
-                </div>
             </div>
 
         </div>
@@ -99,10 +82,10 @@
 
             <div class="col-lg-6 col-md-6">
 
-                <div class="input-group" style="width: fit-content;">
+                <div class="input-group">
                     <!-- <p>Filters:</p> -->
                     <span class="input-group-text">Filters</span>
-                    <textarea class="form-control" aria-label="Filters" name="filters" [(ngModel)]="selectedFilters" (ngModelChange)='onSelectFilters(selectedFilters)'></textarea>
+                    <textarea class="form-control" aria-label="Filters" name="filters" placeholder="write comma seperated e.g. id>100,name=John" [(ngModel)]="selectedFilters" (ngModelChange)='onSelectFilters(selectedFilters)'></textarea>
                     <!-- <input type="text" name="filters" [(ngModel)]="selectedFilters" (ngModelChange)='onSelectFilters(selectedFilters)'>  -->
                 </div>
 
@@ -113,7 +96,7 @@
                 <div class="input-group" style="width: fit-content;">
                     <!-- <p>Number of entries to fetch</p> -->
                     <span class="input-group-text">Number of entries to fetch</span>
-                    <textarea class="form-control"  aria-label="Number of entries to fetch" name="limit" [(ngModel)]="selectedLimit" (ngModelChange)='onSelectLimit(selectedLimit)' ></textarea>
+                    <textarea class="form-control"  aria-label="Number of entries to fetch" name="limit" placeholder="100" [(ngModel)]="selectedLimit" (ngModelChange)='onSelectLimit(selectedLimit)' ></textarea>
                     <!-- <input type="text" name="limit" [(ngModel)]="selectedLimit" (ngModelChange)='onSelectLimit(selectedLimit)'> -->
                 </div>
             
@@ -153,63 +136,52 @@
 
 &nbsp;
 
-<div class="container" *ngIf="onSelectSource">
-
+<div class="container">
     <div class="row">
+        <div class="col-lg-10 col-md-10">
+            <div class="row">
 
-        <div class="col-md-4">
-            <h4>Selected Source</h4>
-            <h5 >
-                <small class="text-muted">
-                    <p style="color: crimson;">
-                        {{selectedSource}}
-                    </p>
-                </small>
-            </h5>
-        </div>
-        
-        <div class="col-md-4">
-            <div *ngIf="onSelectDatabase">
-                <h4>Selected Database</h4>
-                <h5>
-                    <small class="text-muted">
-                        <p style="color: crimson;">
-                            {{selectedDatabase}}
-                        </p>
-                    </small>
-                </h5>
-            </div>
-        </div>
-        
-        <div class="col-md-4">
-            <div *ngIf="onSelectColumns">
-                <h4>Selected Columns</h4>
-                <div *ngFor="let column of selectedColumns">
-                    <h5>
+                <div class="col-md-3" *ngIf="onSelectSource">
+                    <h4 >Selected Source
                         <small class="text-muted">
                             <p style="color: crimson;">
-                                {{column}}
+                                {{selectedSource}}
+                            </p>
+                        </small>
+                    </h4>
+                </div>
+                <div class="col-md-3" *ngIf="onSelectTable">
+                    <h4>Selected Tables</h4>
+                    <h5 >
+                        <small class="text-muted">
+                            <p style="color: crimson;">
+                                {{selectedTable}}
                             </p>
                         </small>
                     </h5>
                 </div>
+                <div class="col-md-4" *ngIf="onSelectColumns">
+                    <h4>Selected Columns</h4>
+                    <div class="row" *ngFor="let column of selectedColumns">
+                        <h5>
+                            <small class="text-muted">
+                                <p style="color: crimson;">
+                                    {{column}}
+                                </p>
+                            </small>
+                        </h5>
+                    </div>
+                </div>
             </div>
         </div>
-        
-    </div>
 
-    <!-- <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
+        <div class="col-lg-2 col-md-2">
+            <h5>Your Response</h5>
+            <div>
+                <p style="color: crimson;">
+                    {{response}}
+                </p>
+            </div>
         </div>
-        <div class="col-md-4"></div>
     </div>
-
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-4"></div>
-    </div> -->
-        
 </div>

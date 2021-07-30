@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SOURCES, DATABASES, MAX_COLUMNS } from '../all-values';
+import { SOURCES, MAX_COLUMNS, TABLES } from '../all-values';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
@@ -11,13 +11,13 @@ export class FormComponent {
 
   title = "Your Form";
   sources = SOURCES;
-  databases= DATABASES;
+  tables= TABLES;
 
   constructor ( private http: HttpClient){}
 
   reset(){
     this.selectedColumns = [];
-    this.selectedDatabase = "";
+    this.selectedTable = "";
     this.selectedFilters = "";
     this.selectedLimit = "";
     this.selectedSource = "";
@@ -26,7 +26,7 @@ export class FormComponent {
   
   resetDb(){
     this.selectedColumns = [];
-    this.selectedDatabase = "";
+    this.selectedTable = "";
     this.selectedFilters = "";
     this.selectedLimit = "";
     this.checkBoxValue.fill(false);
@@ -39,11 +39,11 @@ export class FormComponent {
     console.log(this.selectedSource);
   }
 
-  selectedDatabase : string = "";
-  onSelectDatabase(value: string): void {
+  selectedTable : string = "";
+  onSelectTable(value: string): void {
     this.resetDb();
-    this.selectedDatabase = value;
-    console.log(this.selectedDatabase);
+    this.selectedTable = value;
+    console.log(this.selectedTable);
   }
 
 
@@ -99,7 +99,7 @@ export class FormComponent {
     // console.log(formData.value);
     
     console.log(this.selectedSource);
-    console.log(this.selectedDatabase);
+    console.log(this.selectedTable);
     console.log(this.selectedColumns);
     console.log(this.selectedFilters);
     console.log(this.selectedLimit);
@@ -110,7 +110,7 @@ export class FormComponent {
 
     let json = {
       "source" : this.selectedSource,
-      "db": this.selectedDatabase,
+      "db": this.selectedTable,
       "columns": this.selectedColumns,
       "filters": this.filters,
       "limit": this.selectedLimit
@@ -129,7 +129,10 @@ export class FormComponent {
         console.log(response);
         this.response = response;
       },
-      (error) => console.log(error),
+      (error) => {
+        console.log(error);
+        this.response = "Error";
+      }
       )    
   }
     

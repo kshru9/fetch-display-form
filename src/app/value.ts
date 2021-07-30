@@ -1,10 +1,10 @@
 export interface Sources {
     source : string,
-    databases : string[],
+    tables : string[],
 
 }
 
-export interface Databases {
-    database : string,
+export interface Tables {
+    table : string,
     columns : string[]
 }
